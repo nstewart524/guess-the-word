@@ -130,5 +130,34 @@ const checkIfWin = function () {
   if (word.toUpperCase() === inProgress.innerText) {
     message.classList.add("win")
     message.innerHTML = `<p class="highlight">You guessed the correct word! Great Job!</p>`
+
+    startOver()
   }
 }
+
+
+const startOver = function () {
+  guessButton.classList.add('hide')
+  remainingGuess.classList.add('hide')
+  guessedLettersE.classList.add('hide')
+  playButton.classList.remove(`hide`)
+}
+
+
+playAgainButton.addEventListener(`click`, function () {
+  // reset all original values - grab new word
+  message.classList.remove(`win`)
+  guessedLetters = []
+  guessesLeft = 8
+  remainingGuessSpan.innerText = `${guessesLeft} guesses`
+  guessedLettersE.innerHTML = ``
+  message.innerText = ``
+  // Grab a new word
+  getWord()
+
+   // show the right UI elements
+   guessButton.classList.remove(`hide`)
+   playButton.classList.add(`hide`)
+   remainingGuess.classList.remove(`hide`)
+   guessedLettersE.classList.remove(`hide`)
+ })
