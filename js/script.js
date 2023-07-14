@@ -11,11 +11,11 @@ const word = `magnolia`
 const guessedLetters = []
 
 
-
+// Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
   const placeholderLetters = []
   for (const letter of word) {
-    // console.log(letter)
+    console.log(letter)
     placeholderLetters.push(`●`)
   }
   inProgress.innerText = placeholderLetters.join(``)
@@ -34,7 +34,6 @@ guessButton.addEventListener(`click`, function (e) {
   const validGuess = validate(inputValue)
 
   if (validGuess) {
-    // We've got a letter! Let's guess!
     makeGuess(inputValue)
   }
   textInput.value = ``
@@ -62,5 +61,42 @@ const makeGuess = function (inputValue) {
   } else {
     guessedLetters.push(inputValue)
     console.log(guessedLetters)
+    showGuessedLetters()
+  }
+}
+
+
+const showGuessedLetters = function () {
+  // Clear the list first
+  guessedLettersE.innerHTML = ""
+  for (const letter of guessedLetters) {
+    const li = document.createElement("li")
+    li.innerText = letter
+    guessedLettersE.append(li)
+  }
+}
+
+
+const updateWordInProgress = function (guessedLetters) {
+  const wordUpper = word.toUpperCase()
+  const wordArray = wordUpper.split(``)
+  const revealWord = []
+  for (const letter of wordArray) {
+    if (guessedLetters.includes(letter)) {
+      revealWord.push(letter.toUpperCase())
+    } else {
+      revealWord.push(`●`)
+    }
+  }
+  // console.log(revealWord);
+  inProgress.innerText = revealWord.join(``)
+  checkIfWin()
+}
+
+
+const checkIfWin = function () {
+  if (word.toUpperCase() === inProgress.innerText) {
+    message.classList.add("win")
+    message.innerHTML = `<p class="highlight">You guessed the correct word! Great Job!</p>`
   }
 }
